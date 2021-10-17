@@ -7,9 +7,20 @@ include 'header.php';
         <div class="row mt-3">
             <div class="col-lg-3 col-md-3">
                 <div class="card card-border">
-                    <div class="card-body">
-                        <h4 class="card-title">254 <small class="text-muted">Employees</small></h4>
-                    </div>
+                <div class="card-body">
+                <?php
+                     include './curd/config.php';
+                   $sql=("select count(eid)as no_of_emp from employee");
+                   $check=mysqli_query($conn,$sql) or die("data can't fatch from db.");
+                    if(mysqli_num_rows($check)>0)
+                    {  
+                        while($data=mysqli_fetch_assoc($check)){ 
+                ?>
+                        <h4 class="card-title"><?php echo $data['no_of_emp'];?> <small class="text-muted">Employees</small></h4>
+                    <?php
+                        }
+                    }
+                    ?> </div>
                     <div class="list-group list-group-flush">
                         <a href="employees-list.php" class="list-group-item list-group-item-primary">View all</a>
                     </div>
@@ -17,8 +28,21 @@ include 'header.php';
             </div>
             <div class="col-lg-3 col-md-3">
                 <div class="card card-border">
-                    <div class="card-body">
-                        <h4 class="card-title">25 <small class="text-muted">Jobs</small></h4>
+                <div class="card-body">
+                    <?php
+                        include './curd/config.php';
+                        $sql=("select count(jid)as no_of_job from job");
+                     $check=mysqli_query($conn,$sql) or die("data can't fatch from db.");
+                        if(mysqli_num_rows($check)>0)
+                        { 
+                            while($data=mysqli_fetch_assoc($check))
+                            { 
+                     ?>
+                        <h4 class="card-title"><?php echo $data['no_of_job'];?>  <small class="text-muted">Jobs</small></h4>
+                        <?php
+                        }
+                    }
+                    ?>
                     </div>
                     <div class="list-group list-group-flush">
                         <a href="jobs-list.php" class="list-group-item list-group-item-primary">View all</a>
