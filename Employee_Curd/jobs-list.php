@@ -36,7 +36,7 @@ include 'header.php';
                         <td><?php echo $data['jname']?></td>
                         <td><a href="#" data-toggle="modal" data-target="#job_details1" class="btn btn-sm btn-block btn-info" onclick="jobDEtails(<?php echo $data['jid']?>)">Details</a></td>
                         <td><a href="#" data-toggle="modal" data-target="#job_edit_details1" class="btn btn-sm btn-block btn-warning" onclick="editJOb(<?php echo $data['jid']?>)">Edit</a></td>
-                        <td><a href="#" class="btn btn-sm btn-block btn-danger" onclick="return confirm('Are you sure you want to delete \' <?php echo $data['jname']?> Job \'?');">Delete</a></td>
+                        <td><a href="./curd/deleteJob.php?id=<?php echo $data['jid']; ?>" class="btn btn-sm btn-block btn-danger" onclick="return confirm('Are you sure you want to delete \' <?php echo $data['jname']?> Job \'?');">Delete</a></td>
                     </tr>
                 <?php
                         }
