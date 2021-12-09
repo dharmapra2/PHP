@@ -39,12 +39,12 @@ if($_SESSION["user_role"]== '0'){
             </div>
             <div class="form-group">
                 <label for="exampleInputTile">Title</label>
-                <input type="text" name="post_title"  class="form-control" id="exampleInputUsername" value="<?php echo $row['title'];?>">
+                <input type="text" name="post_title"  class="form-control" id="exampleInputUsername" value="<?php echo stripSlashes($row['title']);?>">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1"> Description</label>
                 <textarea name="postdesc" class="form-control"  required rows="5">
-                <?php echo $row['description'];?>
+                <?php echo stripslashes($row['description']);?>
                 </textarea>
             </div>
             <div class="form-group">

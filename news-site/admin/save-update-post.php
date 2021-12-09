@@ -2,6 +2,7 @@
 include "config.php";
 if(empty($_FILES['new-image']['name'])){
     $new_name=$_POST['old-image'];
+    echo $new_name;
 }
 else{
     $errors=array();
@@ -11,6 +12,7 @@ else{
     $file_type=$_FILES['new-image']['type'];
     $file_ext=end(explode('.',$file_name));
     $extensions=array("jpeg","jpg","png");
+    // echo $file_name."<br>".$file_tmp;
 
     //check file extension only in jpg,png,jpeg format 
     if(in_array($file_ext,$extensions)===false){
@@ -26,11 +28,11 @@ else{
     if($file_size> 2097152){
         $errors[]="File size must be 2mb or lower.";
     }
-    $new_name = time(). "-".basename($file_name);
+    $new_name = time().$file_ext;
+    // echo $new_name."<br>";
     $target= "upload/".$new_name;
     //to save file prefix with time
     //if no error detect then we upload the temporary file name in destination
-    $image_name = $new_name;
     if(empty($errors) == true){
         move_uploaded_file($file_tmp,$target);
     }
@@ -39,12 +41,18 @@ else{
         die();
     }
 }
-$sql = "UPDATE post SET title='{$_POST["post_title"]}',description='{$_POST["postdesc"]}',category={$_POST["category"]},post_img='{$image_name}'
+$image_name = $new_name;
+$title=addslashes($_POST["post_title"]);
+$desc=addslashes($_POST["postdesc"]);
+$sql = "UPDATE post SET title='{$title}',description='{$desc}',category={$_POST["category"]},post_img='{$image_name}'
         WHERE post_id={$_POST["post_id"]};";
+        
 if($_POST['old_category'] != $_POST["category"] ){
   $sql .= "UPDATE category SET post= post - 1 WHERE category_id = {$_POST['old_category']};";
   $sql .= "UPDATE category SET post= post + 1 WHERE category_id = {$_POST["category"]};";
 }
+// echo $sql;
+// die();
     $result=mysqli_multi_query($conn,$sql);
     // bcz, here we perform compound sql query statments.
 if($result){
