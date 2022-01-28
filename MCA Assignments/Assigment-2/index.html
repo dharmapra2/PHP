@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <meta name="keywords" content="HTML,CSS,JavaScript,PHP,Bootstrap">
+    <meta name="description" content="For MCA PHP Assignment">
+    <meta name="author" content="Dharma Pradhan">
+    <link rel="stylesheet" href="/MCA Assignments/bootstrap.min.css">
+    <style>
+        body{
+            background-color: lavenderblush;
+        }
+        .div{
+            width: 100%;
+            height: 100%;
+            margin-top: 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column-reverse;
+        }
+    </style>
+</head>
+<body class="container-sm">
+    <div class="container-fluid bg-primary text-white text-center">
+        <h1>Form Validation</h1>
+    </div>
+   <form action="./input.php" class="container-sm form mt-3" method="post">  
+        <table class="table table-borderless table-responsive">
+            <tbody class="container-sm">
+                <tr class="form-group">
+                    <td class="form-label">Name</td>
+                    <td><input type="number" class="form-control-sm"  name="name" placeholder=""></td>
+                </tr>
+                <tr class="form-group">
+                    <td class="form-label">Age</td>
+                    <td><input type="number" class="form-control-sm"  name="Age" placeholder=""></td>
+                </tr>
+                <tr class="form-group">
+                    <td class="form-label">Class</td>
+                    <td><input type="number" class="form-control-sm"  name="class" placeholder=""></td>
+                </tr>
+                <tr class="form-group">
+                    <td class="form-label">Password</td>
+                    <td><input type="password" class="form-control-sm"  name="pwd" placeholder=""></td>
+                </tr>
+                <tr class="form-group">
+                    <td class="form-label">Confirm Password</td>
+                    <td><input type="password" class="form-control-sm"  name="cpwd" placeholder=""></td>
+                </tr>
+                <tr class="form-group">
+                    <td></td>
+                    <td> <button type="submit" class="btn btn-primary">Submit</button></td>
+                </tr>
+            </tbody>
+    </form>  
+</body>
+</html>
