@@ -1,8 +1,8 @@
 <?php
 require_once "./config.php";
 if(isset($_POST['login_to_add'])){
-    $username=$_POST['user_id'];
-    $password=$_POST['pwd'];
+    $username=trim($_POST['user_id']);
+    $password=trim($_POST['pwd']);
     
     $sql="select uid from user_ac where uid='{$username}' and pwd='{$password}'";
     $result=mysqli_query($conn,$sql) or die("Query failed..");
@@ -20,8 +20,8 @@ if(isset($_POST['login_to_add'])){
     }
 }
 if(isset($_POST['login_to_take'])){
-    $username=$_POST['user_id'];
-    $password=$_POST['pwd'];
+    $username=trim($_POST['user_id']);
+    $password=trim($_POST['pwd']);
     $sql="select uid from user_ac where uid='{$username}' and pwd='{$password}'";
     $result=mysqli_query($conn,$sql) or die("Query failed..");
     if(mysqli_num_rows($result)>0){

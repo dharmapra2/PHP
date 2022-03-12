@@ -1,3 +1,29 @@
+<?php
+include './Utility/config.php';
+$msg="";
+if(isset($_POST['signin']) && !empty($_POST)){
+    $uname=trim($_POST['uname']);
+    $uid=trim($_POST['uid']);
+    $email=trim($_POST['email']);
+    $pwd=trim($_POST['upwd']);
+    $sql="select uid from user_ac where uid='{$uid}';";
+    $result=mysqli_query($conn,$sql) or die("Query failed..");
+    if(mysqli_num_rows($result)>=1){
+        $msg="<div class='alert alert-warning'>User id is already taken.</div>";
+        header("refresh: 4");
+    }else{     
+        $sql=("insert into user_ac(name,uid,email,pwd) values('{$uname}','{$uid}','{$email}','{$pwd}')");
+        $result=mysqli_query($conn,$sql) or die(mysqli_error());
+        // header("Location: {$hostName}");
+        if($result){
+            $msg= "<div class='alert alert-success'>Your Account has created successfully....</div>";
+            header("refresh: 4");
+        }
+    }
+    mysqli_close($conn);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -22,6 +48,7 @@
     <body>
         <div class="container-fluid">
             <div class="link-primary d-grid gap-2 col-6 mx-auto">
+                <div id="msg"><?php echo $msg; ?></div>
                 <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#Add_quiz_modal">Add Quiz</button>
                 <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#take_quiz_modal">Take Quiz</button>
             </div>
@@ -35,25 +62,29 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body container1">
+        
                 <section id="form-box">
                         <div class="btn-box">
                             <div class="active"></div>
                             <button type="button" class="toggle-btn" onclick="LogIn()">Log In</button>
                             <button type="button" class="toggle-btn" onclick="signUp()">Sign Up</button>
                         </div>
+                        
                     <form id="login" class="login-group" method="post" action="./Utility/login.php">
                         <input type="text" class="login-field form-control-sm" placeholder="Enter User Id" name="user_id" required>
                         <input type="password" class="login-field form-control-sm"  placeholder="Enter Password" name="pwd" required/>
                         <input type="checkbox" class="check-box" required><span>Remember Password</span>
                         <button type="submit" name="login_to_add" class="submit-btn">Login</button>
                     </form>
-                    <form method="post" action="./Utility/Register.php" id="signup" class="login-group mb-3">
+                    <form method="post" action="<?php $_SERVER['PHP_SELF'] ?>" id="signup" class="login-group mb-3">
                         <input type="text" class="login-field form-control-sm" placeholder="Enter name" name="uname" required>
                         <input type="text" class="login-field form-control-sm" placeholder="Enter User id" name="uid" required>
-                        <input type="password" class="login-field form-control-sm"  placeholder="Enter Password" name="upwd" />
+                        <input type="email" class="login-field form-control-sm" placeholder="Enter User Email" name="email" required>
+                        <input type="password" class="login-field form-control-sm"  placeholder="Enter Password" name="upwd" required/>
                         <input type="checkbox" class="check-box" required><span>i agree to the terms & conditions</span>
-                        <button type="submit" name="signin" class="submit-btn">Sign Up</button>
+                        <button type="submit" name="signin" value="signin" class="submit-btn">Sign Up</button>
                     </form>
+                  
                 </section>
         </div>
       </div>
@@ -91,6 +122,7 @@
     let signup_btn = document.getElementById('signup');
     let active_btn= document.getElementsByClassName("active")[0];
     const text = document.getElementById('heading');
+    let message = document.getElementById('msg');
     function signUp(){
         text.innerHTML = "Create Account";
         login_btn.style.left="-400px";
