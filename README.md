@@ -1,5 +1,5 @@
 # PHP
-## News-site link- <a href="http://13.235.13.51/index.php">Click here to visit..</a></br>
+## News-site link- <a href="http://65.2.123.229/">Click here to visit..</a></br>
 #### Languages and Tools are Used:
 [![Javascript Badge](https://img.shields.io/badge/-Javascript-F0DB4F?style=for-the-badge&labelColor=black&logo=javascript&logoColor=F0DB4F)](#) [![Mysql Badge](https://img.shields.io/badge/-MySql-3C873A?style=for-the-badge&labelColor=black&logo=MySql&logoColor=3C873A)](#)
 [![PHP Badge](https://img.shields.io/badge/-PHP-61DBFB?style=for-the-badge&labelColor=black&logo=PHP&logoColor=61DBFB)](#)
