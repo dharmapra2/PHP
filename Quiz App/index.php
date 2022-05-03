@@ -1,28 +1,29 @@
 <?php
-include './Utility/config.php';
-$msg="";
-if(isset($_POST['signin']) && !empty($_POST)){
-    $uname=trim($_POST['uname']);
-    $uid=trim($_POST['uid']);
-    $email=trim($_POST['email']);
-    $pwd=trim($_POST['upwd']);
-    $sql="select uid from user_ac where uid='{$uid}';";
-    $result=mysqli_query($conn,$sql) or die("Query failed..");
-    if(mysqli_num_rows($result)>=1){
-        $msg="<div class='alert alert-warning'>User id is already taken.</div>";
-        header("refresh: 4");
-    }else{     
-        $sql=("insert into user_ac(name,uid,email,pwd) values('{$uname}','{$uid}','{$email}','{$pwd}')");
-        $result=mysqli_query($conn,$sql) or die(mysqli_error());
-        // header("Location: {$hostName}");
-        if($result){
-            $msg= "<div class='alert alert-success'>Your Account has created successfully....</div>";
-            header("refresh: 4");
-        }
-    }
-    mysqli_close($conn);
-}
+  include './Utility/config.php';
+  $msg="";
+  if(isset($_POST['signin']) && !empty($_POST)){
+      $uname=trim($_POST['uname']);
+      $uid=trim($_POST['uid']);
+      $email=trim($_POST['email']);
+      $pwd=trim($_POST['upwd']);
+      $sql="select uid from user_ac where uid='{$uid}';";
+      $result=mysqli_query($conn,$sql) or die("Query failed..");
+      if(mysqli_num_rows($result)>0){
+          $msg="<div class='alert alert-warning'>User id is already taken.</div>";
+          header("refresh: 10");
+      }else{     
+          $sql=("insert into user_ac(name,uid,email,pwd) values('{$uname}','{$uid}','{$email}','{$pwd}')");
+          $result=mysqli_query($conn,$sql) or die(mysqli_error());
+          // header("Location: {$hostName}");
+          if($result){
+              $msg= "<div class='alert alert-success'>Your Account has created successfully....</div>";
+              header("refresh: 10");
+          }
+      }
+      mysqli_close($conn);
+  }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +31,9 @@ if(isset($_POST['signin']) && !empty($_POST)){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This is based on quiz contest.\n where user can add and take the quiz..\n This is on PHP and MySQL.">
+    <meta name="keywords" content="HTML, CSS,JavaScript,PHP,MySQL,Bootstrap">
+    <meta name="author" content="Dharma Pradhan">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <style>
@@ -90,7 +94,7 @@ if(isset($_POST['signin']) && !empty($_POST)){
       </div>
     </div>
   </div>
-  <!--Add Quiz Modal -->
+  <!--take Quiz Modal -->
   <div class="modal fade" id="take_quiz_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content container-sm">
@@ -111,6 +115,7 @@ if(isset($_POST['signin']) && !empty($_POST)){
                            </div>
                           <button type="submit" class="btn btn-primary" name="login_to_take">Login</button>
                         </form>
+                        <a class="text-danger" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#Add_quiz_modal" onclick="create_ac();">Don't Have Account</a>
                       </div>
         </div>
       </div>
@@ -136,6 +141,9 @@ if(isset($_POST['signin']) && !empty($_POST)){
         signup_btn.style.left="450px";
         active_btn.style.left="0px";
         document.getElementById('form-box').style.height="380px";
+    }
+    function create_ac(){
+      signUp();
     }
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

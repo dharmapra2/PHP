@@ -17,7 +17,7 @@ $tot=mysqli_num_rows(mysqli_query($conn,"select opt1 from quiz;"));
 // set page if number is -ve then 1 or much larger then total pages from get method
 $page=($page<=-1)?1:($page>=$tot?$tot:$page);
 
-$limit=1;
+$limit=4;
 $offset=($page-1)*$limit;
 // sql for fetching all data
 $sql= "select * from quiz order by Question limit {$offset},{$limit}";
@@ -170,7 +170,7 @@ if(isset($_POST['submit']) && !empty($_POST['opt'])){
                           echo '<a class="justify-content-end" href="./takeQuiz.php?page='.($page+1).'"><input type="submit" class="btn btn-outline-success" name="next" value="Next"></a>';
                        }
                        echo '</div>';
-                       if($total_records==$page){
+                       if($total_page==$page){
                         echo '<div class="link-primary d-grid m-3 col-6 mx-auto"><input type="submit" name="submit" class="btn btn-success" value="submit the quiz"></div>';
                        }
                       //  if(isset($_POST['opt'])){

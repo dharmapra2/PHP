@@ -6,7 +6,7 @@
     $list=$_POST['option'];
     unset($_POST['submit']);
     define("option",$list);
-    $_POST['question']=htmlspecialchars(trim($_POST['question']));
+    $_POST['question']=htmlspecialchars(addcslashes(trim($_POST['question']),'"'));
     $_POST['Answer']=htmlspecialchars(trim($_POST['Answer']),ENT_QUOTES);
     $no=1;
     foreach($_POST['option'] as $key=>$val){
@@ -19,7 +19,7 @@
     // print_r($_POST);
     // echo $empty;
     // die();
-    $question=htmlspecialchars(trim($_POST['question']),ENT_QUOTES);
+    $question=htmlspecialchars(addcslashes(trim($_POST['question']),'"'),ENT_QUOTES);
     $sql1="select Question from quiz where Question='{$question}'";
     $result1=mysqli_query($conn,$sql1) or die("Query failed..");
 

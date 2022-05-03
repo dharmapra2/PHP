@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <meta name="keywords" content="HTML,CSS,JavaScript,PHP,Bootstrap">
+    <meta name="description" content="For internship Assignment">
+    <meta name="author" content="Dharma Pradhan">
+    <!-- <script async src="./index.js"></script> -->
+    <link rel="stylesheet" href='./css/bootstrap.min.css'>
+    <style>
+        body {
+            background-color: lavenderblush;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular';
+        }
+        .msg{
+            height: 1rem !important;
+        }
+        div {
+            width: 100% !important;
+        }
+        #msg{
+            display: none;
+        }
+        .address {
+            height: 10rem;
+        }
+
+        td {
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+        }
+
+        form {
+            padding: 1rem !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-primary text-white text-center">
+        <h1>Internship Assignment</h1>
+    </div>
+    <div class="alert alert-success text" id="msg"><p>Data Saved in DataBase</p></div>
+    <form name="form" action="./input.php" class="container-fluid " method="post" autocomplete="on">
+        <table class="table table-responsive container-sm">
+            <tbody class="">
+                <tr class="form-group">
+                    <td><label class="form-label"> Name</label>
+                        <input type="text" class="form-control-sm" name="name" placeholder="Enter your name" required>
+                    </td>
+                </tr>
+                <tr class="form-group">
+                    <td><label class="form-label">Telephone</label><input type="tel" class="form-control-sm" name="tele"
+                            placeholder="Enter Phone Number" required></td>
+                </tr>
+                <tr class="form-group">
+                    <td><label class="form-label">Address</label>
+                        <textarea name="address" class="form-control-sm address" cols="22" rows="5"
+                            placeholder="Enter full detail of address" required></textarea>
+                    </td>
+                </tr>
+                <tr class="form-group">
+                    <td><label class="form-label">country</label><input type="text" class="form-control-sm"
+                            name="country" placeholder="Enter your country" required></td>
+                </tr>
+                <tr class="form-group">
+                    <td><label class="form-label">Check in date</label><input type="date" class="form-control-sm"
+                            name="c_in_date" placeholder="" required></td>
+                </tr>
+                <tr class="form-group">
+                    <td><label class="form-label">Check out date</label><input type="date" class="form-control-sm"
+                            name="c_out_date" placeholder="" required></td>
+                </tr>
+                <tr class="form-group">
+                    <td><label class="form-label">payment Status</label><input type="radio" name="Pay_status"
+                            value="1" required>Yes <input type="radio" name="Pay_status" value="0" id="" required>No</td>
+                </tr>
+                <input type="hidden" name="total_cost" id="tc" value="0">
+                <tr class="form-group">
+                    <td><label class="form-label">payment Mode</label><select name="Pay_mode" id=""
+                            class="form-control-sm" required>
+                            <option value="" selected disabled>Select Any mode</option>
+                            <option value="Cash">Cash</option>
+                            <option value="card">Card</option>
+                            <option value="Paypal">paypal</option>
+                            <option value="Cheque">Cheque</option>
+                        </select></td>
+                </tr>
+                <tr class="form-group">
+                    <td> <button type="submit" name="submit" value="submit" class="btn btn-primary" id="btn">Submit</button></td>
+                </tr>
+                <tr class="form-group">
+                    <td> <a href="./display.php"  id="reset"><button type="button" class="btn btn-primary"> Click to View Bills</button></a></td>
+                </tr>
+            </tbody>
+    </form>
+    
+    
+    <script>
+        let submit = document.getElementById('btn');
+        let reset = document.getElementById('reset');
+        let totalCost = document.getElementById('tc');
+        let msg = document.getElementById('msg');
+        let form=document.querySelector('form');
+        submit.addEventListener('click', (e) => {
+           submit.disabled=true;
+            // e.preventDefault();
+            let data = Array.from(document.querySelector('form')).reduce((acc, val) => ({
+                ...acc, [ val.name ]: val.value
+            }), {});
+            console.log(data);
+            let d1 = new Date(data[ 'c_in_date' ]);
+            d1.setFullYear(2021);
+            let d2 = new Date(data[ 'c_out_date' ]);
+            d2.setFullYear(2021);
+            let time = (d2.getTime() - d1.getTime()) / 1000;
+            let months = Math.abs(Math.round(time / (60 * 60 * 24 * 7 * 4)));
+            let days = Math.abs(Math.round(time / (3600 * 24)));
+            console.log(` diff :- ${days} ${months}`);
+            console.log(d1.getMonth(),d2.getMonth());
+            tc.value= calculate(d1,d2);
+            
+            data = Array.from(document.querySelector('form')).reduce((acc, val) => ({
+                ...acc, [ val.name ]: val.value
+             }), {});
+             if(data.totalCost>0){
+                msg.style.display='block';
+            }else{
+                msg.style.display='none';
+            }
+             console.log(data);
+                 submit.disabled=false;   
+                 setTimeout(() => {
+                    msg.style.display='none';
+                    form.reset();
+                 }, 2000);         
+        });
+        function days(month){
+            if(month == 0 || month == 2 || month == 4 || month == 6 || month == 7 || month == 9 || month == 11) return 31;
+            if (month == 3 || month == 5 || month == 8 || month == 10) return 30;
+            if (month == 1) return 28;
+         }
+         function charges(month){
+             if(month == 0 || month == 1 || month == 2) return 1000;
+             if (month == 3 || month == 4 || month == 5 || month == 6) return 1500;
+             if (month == 7 || month == 8 || month == 9 || month == 10 || month == 11) return 2500;
+         }
+        function calculate(checkInDate, checkOutDate) {
+            var checkInDateMonth = checkInDate.getMonth();
+            var checkOutDateMonth = checkOutDate.getMonth(); 
+            if(checkInDateMonth == checkOutDateMonth){
+                return (checkOutDate.getDate() - checkInDate.getDate())*charges(checkInDateMonth);
+            }
+            if(checkInDateMonth < checkOutDateMonth){
+                var totalCost = (days(checkInDateMonth) - checkInDate.getDate() + 1) * charges(checkInDateMonth);
+                for(let i = checkInDateMonth + 1;i < checkOutDateMonth; i++){
+                    totalCost +=  days(i)*charges(i);
+                }
+                totalCost += (checkOutDate.getDate() - 1) * charges(checkOutDateMonth);
+                return totalCost;
+            }
+        }
+        // for resting the form data
+        reset.addEventListener('click',function(e){
+            form.reset();
+        })
+    </script>
+</body>
+
+</html>
